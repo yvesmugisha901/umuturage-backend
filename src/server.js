@@ -3,7 +3,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import pool from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";  // <-- import routes after dotenv & pool
+import isiboRoutes from "./routes/isiboRoutes.js";
 
+app.use("/api/isibo", isiboRoutes);
 dotenv.config();
 
 const app = express(); // <-- app must be declared BEFORE using it

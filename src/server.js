@@ -2,19 +2,24 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import pool from "./config/db.js";
-import userRoutes from "./routes/userRoutes.js";  // <-- import routes after dotenv & pool
-import isiboRoutes from "./routes/isiboRoutes.js";
 
-app.use("/api/isibo", isiboRoutes);
+// Load environment variables
 dotenv.config();
 
-const app = express(); // <-- app must be declared BEFORE using it
+// Create server
+const app = express();
 
+// Middlewares
 app.use(cors());
 app.use(express.json());
 
-// Routes
+// Routes (import AFTER dotenv)
+import userRoutes from "./routes/userRoutes.js";
+import isiboRoutes from "./routes/isiboRoutes.js";
+
+// Use routes
 app.use("/api/users", userRoutes);
+app.use("/api/isibo", isiboRoutes);
 
 // Test route
 app.get("/", async (req, res) => {
@@ -26,6 +31,9 @@ app.get("/", async (req, res) => {
     }
 });
 
-app.listen(process.env.PORT, () => {
-    console.log("Server running on port", process.env.PORT);
+// Start server
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+    console.log("Server running on port", PORT);
 });

@@ -1,5 +1,4 @@
 import express from "express";
-import authMiddleware from "../middleware/authMiddleware.js";
 import {
     getVillageDashboard,
     getPendingUpdates,
@@ -7,28 +6,26 @@ import {
     rejectUpdate,
     getVillageReports,
     getVillageNotifications,
-    getVillageProfile,
-    updateVillageProfile
+    getVillageSettings,
+    updateVillageSettings
 } from "../controllers/villageController.js";
+
+import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// Dashboard
-router.get("/dashboard", authMiddleware, getVillageDashboard);
+router.use(authMiddleware);
 
-// Pending updates
-router.get("/pending-updates", authMiddleware, getPendingUpdates);
-router.put("/pending-updates/:id/approve", authMiddleware, approveUpdate);
-router.put("/pending-updates/:id/reject", authMiddleware, rejectUpdate);
+router.get("/dashboard", getVillageDashboard);
 
-// Reports
-router.get("/reports", authMiddleware, getVillageReports);
+router.get("/pending-updates", getPendingUpdates);
+router.put("/pending-updates/:id/approve", approveUpdate);
+router.put("/pending-updates/:id/reject", rejectUpdate);
 
-// Notifications
-router.get("/notifications", authMiddleware, getVillageNotifications);
+router.get("/reports", getVillageReports);
+router.get("/notifications", getVillageNotifications);
 
-// Settings/Profile
-router.get("/profile", authMiddleware, getVillageProfile);
-router.put("/profile", authMiddleware, updateVillageProfile);
+router.get("/settings", getVillageSettings);
+router.put("/settings", updateVillageSettings);
 
 export default router;

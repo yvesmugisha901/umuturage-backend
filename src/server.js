@@ -8,7 +8,8 @@ import pool from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import isiboRoutes from "./routes/isiboRoutes.js";
 import villageRoutes from "./routes/villageRoutes.js"; // includes dashboard, notifications, profile, settings
-
+import cellRoutes from "./routes/cellRoutes.js";
+import sectorRoutes from "./routes/sectorRoutes.js";
 // Load environment variables
 dotenv.config();
 
@@ -23,6 +24,8 @@ app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/isibo", isiboRoutes);
 app.use("/api/village", villageRoutes); // all village-related routes including settings/profile
+app.use("/api/cell", cellRoutes);
+app.use("/api/sector", sectorRoutes);
 
 // Test route
 app.get("/", async (req, res) => {
